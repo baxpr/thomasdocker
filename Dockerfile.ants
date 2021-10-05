@@ -47,7 +47,7 @@ ENTRYPOINT ["/neurodocker/startup.sh"]
 
 ENV ANTSVER="2.3.4"
 ENV ANTSPATH="/opt/ants-$ANTSVER"
-ENV PATH="$ANTSPATH:$PATH"
+ENV PATH="${ANTSPATH}/bin:$PATH"
 #RUN echo "Installing ANTs ..." \
 #    && mkdir -p /opt/ants-build \
 #    && curl -fsSL --retry 5 https://github.com/ANTsX/ANTs/archive/refs/tags/v${ANTSVER}.tar.gz \
