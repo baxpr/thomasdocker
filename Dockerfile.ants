@@ -48,17 +48,17 @@ ENTRYPOINT ["/neurodocker/startup.sh"]
 ENV ANTSVER="2.3.4"
 ENV ANTSPATH="/opt/ants-$ANTSVER"
 ENV PATH="${ANTSPATH}/bin:$PATH"
-#RUN echo "Installing ANTs ..." \
-#    && mkdir -p /opt/ants-build \
-#    && curl -fsSL --retry 5 https://github.com/ANTsX/ANTs/archive/refs/tags/v${ANTSVER}.tar.gz \
-#       | tar -xz -C /opt/ants-build --strip-components 1 \
-#    && cd /opt/ants-build && mkdir build install && cd build \
-#    && cmake -DCMAKE_INSTALL_PREFIX=$ANTSPATH \
-#       -DBUILD_TESTING=OFF -DRUN_LONG_TESTS=OFF -DRUN_SHORT_TESTS=OFF .. 2>&1 \
-#    && make -j 4 2>&1 \
-#    && cd ANTS-build \
-#    && make install 2>&1 \
-#    && cd /opt && rm -r /opt/ants-build
+RUN echo "Installing ANTs ..." \
+    && mkdir -p /opt/ants-build \
+    && curl -fsSL --retry 5 https://github.com/ANTsX/ANTs/archive/refs/tags/v${ANTSVER}.tar.gz \
+       | tar -xz -C /opt/ants-build --strip-components 1 \
+    && cd /opt/ants-build && mkdir build install && cd build \
+    && cmake -DCMAKE_INSTALL_PREFIX=$ANTSPATH \
+       -DBUILD_TESTING=OFF -DRUN_LONG_TESTS=OFF -DRUN_SHORT_TESTS=OFF .. 2>&1 \
+    && make -j 4 2>&1 \
+    && cd ANTS-build \
+    && make install 2>&1 \
+    && cd /opt && rm -r /opt/ants-build
 
 CMD ["/bin/bash"]
 
