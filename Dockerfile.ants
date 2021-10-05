@@ -19,14 +19,14 @@ RUN export ND_ENTRYPOINT="/neurodocker/startup.sh" \
     && apt-get update -qq \
     && apt-get install -y -q --no-install-recommends \
            apt-utils \
+           build-essential \
            bzip2 \
            ca-certificates \
+           cmake \
            curl \
+           git \
            locales \
            unzip \
-           cmake \
-           build-essential \
-           git \
            zlib1g-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
@@ -52,12 +52,14 @@ ENTRYPOINT ["/neurodocker/startup.sh"]
 #    && curl -fsSL --retry 5 https://github.com/ANTsX/ANTs/archive/refs/tags/v2.3.4.tar.gz \
 #    | tar -xz -C /opt/ants-build --strip-components 1 \
 #    && cd /opt/ants-build && mkdir build install && cd build \
-#    && cmake -DCMAKE_INSTALL_PREFIX=/opt/ants-2.3.4 .. 2>&1 | tee cmake.log \
+#    && cmake -DCMAKE_INSTALL_PREFIX=/opt/ants-2.3.4 -DBUILD_TESTING=OFF -DRUN_LONG_TESTS=OFF -DRUN_SHORT_TESTS=OFF .. 2>&1 | tee cmake.log \
 #    && make -j 4 2>&1 | tee build.log \
 #    && cd ANTS-build \
 #    && make install 2>&1 | tee install.log
 
 #    && rm -r /opt/ants-build
+
+#  USE_SYSTEM_SlicerExecutionModel
 
 CMD ["/bin/bash"]
 
