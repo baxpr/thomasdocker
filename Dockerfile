@@ -162,7 +162,7 @@ RUN apt-get update -qq \
         libgtk2.0-0 libpulse0 libasound2 libcaca0 libopenblas-base \
         language-pack-en \
     && apt-get clean \
-    && mv src/ImageMagick-policy.xml /etc/ImageMagick-6/policy.xml
+    && mv /opt/src/ImageMagick-policy.xml /etc/ImageMagick-6/policy.xml
 
 RUN echo '{ \
     \n  "pkg_manager": "apt", \
