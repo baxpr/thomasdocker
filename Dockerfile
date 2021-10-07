@@ -65,12 +65,12 @@ RUN echo "Installing ANTs ..." \
     && cd /opt && rm -r /opt/ants-build
 
 
-ENV FSLDIR="/opt/fsl-5.0.11" \
-    PATH="/opt/fsl-5.0.11/bin:/opt/fsl-6.0.4/fslpython/envs/fslpython/bin:$PATH" \
+ENV FSLDIR="/opt/fsl-6.0.4" \
+    PATH="/opt/fsl-6.0.4/bin:$PATH" \
     FSLOUTPUTTYPE="NIFTI_GZ" \
     FSLMULTIFILEQUIT="TRUE" \
-    FSLTCLSH="/opt/fsl-5.0.11/bin/fsltclsh" \
-    FSLWISH="/opt/fsl-5.0.11/bin/fslwish" \
+    FSLTCLSH="/opt/fsl-6.0.4/bin/fsltclsh" \
+    FSLWISH="/opt/fsl-6.0.4/bin/fslwish" \
     FSLLOCKDIR="" \
     FSLMACHINELIST="" \
     FSLREMOTECALL="" \
@@ -98,22 +98,15 @@ RUN apt-get update -qq \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && echo "Downloading FSL ..." \
-    && mkdir -p /opt/fsl-5.0.11 \
-    && curl -fsSL --retry 5 https://fsl.fmrib.ox.ac.uk/fsldownloads/fsl-5.0.11-centos6_64.tar.gz \
-    | tar -xz -C /opt/fsl-5.0.11 --strip-components 1 \
+    && mkdir -p /opt/fsl-6.0.4 \
+    && curl -fsSL --retry 5 https://fsl.fmrib.ox.ac.uk/fsldownloads/fsl-6.0.4-centos6_64.tar.gz \
+    | tar -xz -C /opt/fsl-6.0.4 --strip-components 1 \
     && sed -i '$iecho Some packages in this Docker container are non-free' $ND_ENTRYPOINT \
     && sed -i '$iecho If you are considering commercial use of this container, please consult the relevant license:' $ND_ENTRYPOINT \
     && sed -i '$iecho https://fsl.fmrib.ox.ac.uk/fsl/fslwiki/Licence' $ND_ENTRYPOINT \
     && sed -i '$isource $FSLDIR/etc/fslconf/fsl.sh' $ND_ENTRYPOINT \
     && echo "Installing FSL conda environment ..." \
-    && bash /opt/fsl-5.0.11/etc/fslconf/fslpython_install.sh -f /opt/fsl-5.0.11
-
-# Replace fsleyes 5 with fsleyes 6. We set the path above so that FSL 5 gets preference
-# for everything else
-COPY fslconf-local /opt/fslconf-local
-RUN rm ${FSLDIR}/bin/fsleyes \
-    && rm -r ${FSLDIR}/bin/FSLeyes \
-    && /opt/fslconf-local/fslpython_install_local.sh
+    && bash /opt/fsl-6.0.4/etc/fslconf/fslpython_install.sh -f /opt/fsl-6.0.4
 
 ENV C3DPATH="/opt/convert3d-1.0.0" \
     PATH="/opt/convert3d-1.0.0/bin:$PATH"
@@ -178,7 +171,7 @@ RUN echo '{ \
     \n    [ \
     \n      "fsl", \
     \n      { \
-    \n        "version": "5.0.11" \
+    \n        "version": "6.0.4" \
     \n      } \
     \n    ], \
     \n    [ \
