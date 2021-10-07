@@ -31,7 +31,7 @@ fsl_dir=""
 # Download miniconda installer script
 #####################################
 
-fsl_dir="/opt/fsl-6.0.4"
+fsl_dir="/opt/fsl-6.0.2"
 mkdir ${fsl_dir}
 platform=`uname -s`
 miniconda_url="https://repo.continuum.io/miniconda"

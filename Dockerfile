@@ -113,7 +113,6 @@ RUN apt-get update -qq \
 COPY fslconf-local /opt/fslconf-local
 RUN rm ${FSLDIR}/bin/fsleyes \
     && rm -r ${FSLDIR}/bin/FSLeyes \
-    && mkdir -p /opt/fsl-6.0.4 \
     && /opt/fslconf-local/fslpython_install_local.sh
 
 ENV C3DPATH="/opt/convert3d-1.0.0" \
