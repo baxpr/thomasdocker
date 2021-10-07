@@ -150,12 +150,14 @@ ENV PATH="/opt/thomas_new:$PATH"
 ENV PATH="/opt/PICSL-MALF:$PATH"
 
 # ImageMagick etc. ImageMagick security policy needs to be more permissive
-# https://www.kb.cert.org/vuls/id/332928
+#    https://www.kb.cert.org/vuls/id/332928
+# Also avoid --no-install-recommends here because it messes up fonts for
+# ImageMagick.
 ADD src /opt/src
 ENV PATH="${PATH}:/opt/src"
 RUN apt-get update -qq \
-    && apt-get install -y -q --no-install-recommends \
-        imagemagick ghostscript xvfb \
+    && apt-get install -y -q \
+        ghostscript imagemagick xvfb libgomp1 \
         libglu1-mesa libgl1-mesa-glx libsm6 libice6 libxt6 \
         libjpeg-turbo8 libpng16-16 libxrender1 libxcursor1 \
         libxinerama1 libfreetype6 libxft2 libxrandr2 libmng2 \
