@@ -152,10 +152,15 @@ ENV PATH="/opt/PICSL-MALF:$PATH"
 # ImageMagick etc
 RUN apt-get update -qq \
     && apt-get install -y -q --no-install-recommends \
-    imagemagick ghostscript xvfb \
+        imagemagick ghostscript xvfb \
+        libglu1-mesa libgl1-mesa-glx libsm6 libice6 libxt6 \
+        libjpeg-turbo8 libpng16-16 libxrender1 libxcursor1 \
+        libxinerama1 libfreetype6 libxft2 libxrandr2 libmng2 \
+        libgtk2.0-0 libpulse0 libasound2 libcaca0 libopenblas-base \
+        language-pack-en \
     && apt-get clean
-ADD finish.sh /opt/finish.sh
-ENV PATH="${PATH}:/opt"
+ADD src /opt/src
+ENV PATH="${PATH}:/opt/src"
 
 RUN echo '{ \
     \n  "pkg_manager": "apt", \

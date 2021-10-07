@@ -32,16 +32,17 @@ XYZ=(${com// / })
 
 # Views
 for sl in -7 -4 -1 2 5 8; do
-    fsleyes render -of slice_${sl}.png \
-        --scene ortho \
-        --worldLoc ${XYZ[0]} ${XYZ[1]} $(echo ${XYZ[2]} + ${sl} | bc -l) \
-        --layout horizontal --hideCursor --hideLabels --hidex --hidey \
-        left/crop_t1 --overlayType volume \
-        right/crop_t1 --overlayType volume \
-        left/1-THALAMUS --overlayType label --lut random --outline --outlineWidth 1 \
-        right/1-THALAMUS --overlayType label --lut random --outline --outlineWidth 1 \
-        left/thomas --overlayType label --lut random --outline --outlineWidth 2 \
-        right/thomasr --overlayType label --lut random --outline --outlineWidth 2
+    xvfb-run -n $(($$ + 99)) -s '-screen 0 1600x1200x24 -ac +extension GLX' \
+        fsleyes render -of slice_${sl}.png \
+            --scene ortho \
+            --worldLoc ${XYZ[0]} ${XYZ[1]} $(echo ${XYZ[2]} + ${sl} | bc -l) \
+            --layout horizontal --hideCursor --hideLabels --hidex --hidey \
+            left/crop_t1 --overlayType volume \
+            right/crop_t1 --overlayType volume \
+            left/1-THALAMUS --overlayType label --lut random --outline --outlineWidth 1 \
+            right/1-THALAMUS --overlayType label --lut random --outline --outlineWidth 1 \
+            left/thomas --overlayType label --lut random --outline --outlineWidth 2 \
+            right/thomasr --overlayType label --lut random --outline --outlineWidth 2
 done
 
 # Combine into single image
