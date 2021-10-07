@@ -149,11 +149,12 @@ ENV THOMAS_HOME="/opt/thomas_new"
 ENV PATH="/opt/thomas_new:$PATH"
 ENV PATH="/opt/PICSL-MALF:$PATH"
 
-# ImageMagick
+# ImageMagick etc
 RUN apt-get update -qq \
     && apt-get install -y -q --no-install-recommends \
     imagemagick ghostscript xvfb \
     && apt-get clean
+ADD finish.sh /opt/finish.sh
 
 RUN echo '{ \
     \n  "pkg_manager": "apt", \
