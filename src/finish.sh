@@ -41,8 +41,8 @@ for sl in -7 -4 -1 2 5 8; do
             right/crop_t1 --overlayType volume \
             left/1-THALAMUS --overlayType label --lut random --outline --outlineWidth 1 \
             right/1-THALAMUS --overlayType label --lut random --outline --outlineWidth 1 \
-            left/thomas --overlayType label --lut random --outline --outlineWidth 2 \
-            right/thomasr --overlayType label --lut random --outline --outlineWidth 2
+            left/thomas --overlayType label --lut random --outline --outlineWidth 3 \
+            right/thomasr --overlayType label --lut random --outline --outlineWidth 3
 done
 
 # Combine into single image
