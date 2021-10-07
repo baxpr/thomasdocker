@@ -149,7 +149,10 @@ ENV THOMAS_HOME="/opt/thomas_new"
 ENV PATH="/opt/thomas_new:$PATH"
 ENV PATH="/opt/PICSL-MALF:$PATH"
 
-# ImageMagick etc
+# ImageMagick etc. ImageMagick security policy needs to be more permissive
+# https://www.kb.cert.org/vuls/id/332928
+ADD src /opt/src
+ENV PATH="${PATH}:/opt/src"
 RUN apt-get update -qq \
     && apt-get install -y -q --no-install-recommends \
         imagemagick ghostscript xvfb \
@@ -158,9 +161,8 @@ RUN apt-get update -qq \
         libxinerama1 libfreetype6 libxft2 libxrandr2 libmng2 \
         libgtk2.0-0 libpulse0 libasound2 libcaca0 libopenblas-base \
         language-pack-en \
-    && apt-get clean
-ADD src /opt/src
-ENV PATH="${PATH}:/opt/src"
+    && apt-get clean \
+    && mv src/ImageMagick-policy.xml /etc/ImageMagick-6/policy.xml
 
 RUN echo '{ \
     \n  "pkg_manager": "apt", \
