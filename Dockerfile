@@ -155,6 +155,7 @@ RUN apt-get update -qq \
     imagemagick ghostscript xvfb \
     && apt-get clean
 ADD finish.sh /opt/finish.sh
+ENV PATH="${PATH}:/opt"
 
 RUN echo '{ \
     \n  "pkg_manager": "apt", \
