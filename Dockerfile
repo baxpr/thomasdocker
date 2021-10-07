@@ -152,7 +152,7 @@ ENV PATH="/opt/PICSL-MALF:$PATH"
 # ImageMagick
 RUN apt-get update -qq \
     && apt-get install -y -q --no-install-recommends \
-    imagemagick ghostscript \
+    imagemagick ghostscript xvfb \
     && apt-get clean
 
 RUN echo '{ \
@@ -160,7 +160,7 @@ RUN echo '{ \
     \n  "instructions": [ \
     \n    [ \
     \n      "base", \
-    \n      "ubuntu:16.04" \
+    \n      "ubuntu:18.04" \
     \n    ], \
     \n    [ \
     \n      "ants", \
