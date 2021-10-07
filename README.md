@@ -1,5 +1,5 @@
 # THOMAS docker version
-This is a docker container for Thalamus Optimized Multi Atlas Segmentation (THOMAS), the state of the art multi-atlas thalamic nuclei segmentation method.
+This is a docker container for Thalamus Optimized Multi Atlas Segmentation (THOMAS), the state of the art multi-atlas thalamic nuclei segmentation method. Minor edits to compile ANTS directly from the source during the docker build instead of downloading an existing set of binaries.
 The THOMAS workflow is shown below-
 
 ![THOMAS workflow](THOMAS.jpg "Workflow")
