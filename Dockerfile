@@ -152,13 +152,17 @@ RUN \
 # We clone a specific commit of THOMAS. There are no releases but 32936aa is THOMAS 2.1 as of 20211007
 RUN cd /opt && git clone https://github.com/thalamicseg/thomas_new.git && cd thomas_new && git checkout 32936aa
 
-
 ADD ./jointfusion.tgz /opt/PICSL-MALF
 ADD ./example.tgz /opt/testcase
 ENV THOMAS_HOME="/opt/thomas_new"
 ENV PATH="/opt/thomas_new:$PATH"
 ENV PATH="/opt/PICSL-MALF:$PATH"
 
+# ImageMagick
+RUN apt-get update -qq \
+    && apt-get install -y -q --no-install-recommends \
+    ImageMagick \
+    && apt-get clean
 
 RUN echo '{ \
     \n  "pkg_manager": "apt", \
