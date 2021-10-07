@@ -152,7 +152,7 @@ ENV PATH="/opt/PICSL-MALF:$PATH"
 # ImageMagick
 RUN apt-get update -qq \
     && apt-get install -y -q --no-install-recommends \
-    ImageMagick \
+    imagemagick ghostscript \
     && apt-get clean
 
 RUN echo '{ \
