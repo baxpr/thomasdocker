@@ -66,7 +66,7 @@ RUN echo "Installing ANTs ..." \
 
 
 ENV FSLDIR="/opt/fsl-5.0.11" \
-    PATH="/opt/fsl-5.0.11/bin:$PATH" \
+    PATH="/opt/fsl-5.0.11/bin:/opt/fsl-6.0.4/fslpython/envs/fslpython/bin:$PATH" \
     FSLOUTPUTTYPE="NIFTI_GZ" \
     FSLMULTIFILEQUIT="TRUE" \
     FSLTCLSH="/opt/fsl-5.0.11/bin/fsltclsh" \
@@ -107,6 +107,15 @@ RUN apt-get update -qq \
     && sed -i '$isource $FSLDIR/etc/fslconf/fsl.sh' $ND_ENTRYPOINT \
     && echo "Installing FSL conda environment ..." \
     && bash /opt/fsl-5.0.11/etc/fslconf/fslpython_install.sh -f /opt/fsl-5.0.11
+
+# Replace fsleyes 5 with fsleyes 6. We set the path above so that FSL 5 gets preference
+# for everything else
+COPY fslconf-local /opt/fslconf-local
+RUN rm ${FSLDIR}/bin/fsleyes \
+    && rm -r ${FSLDIR}/bin/FSLeyes \
+    && mkdir -p /opt/fsl-6.0.4 \
+    && cd /opt/fslconf-local \
+    && fslpython_install_local.sh
 
 ENV C3DPATH="/opt/convert3d-1.0.0" \
     PATH="/opt/convert3d-1.0.0/bin:$PATH"
