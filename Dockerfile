@@ -115,24 +115,6 @@ RUN echo "Downloading Convert3D ..." \
     && curl -fsSL --retry 5 https://sourceforge.net/projects/c3d/files/c3d/1.0.0/c3d-1.0.0-Linux-x86_64.tar.gz/download \
     | tar -xz -C /opt/convert3d-1.0.0 --strip-components 1
 
-ENV CONDA_DIR="/opt/miniconda-latest" \
-    PATH="$PATH:/opt/miniconda-latest/bin"
-RUN export PATH="$PATH:/opt/miniconda-latest/bin" \
-    && echo "Downloading Miniconda installer ..." \
-    && conda_installer="/tmp/miniconda.sh" \
-    && curl -fsSL --retry 5 -o "$conda_installer" https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh \
-    && bash "$conda_installer" -b -p /opt/miniconda-latest \
-    && rm -f "$conda_installer" \
-    && conda update -yq -nbase conda \
-    && conda config --system --prepend channels conda-forge \
-    && conda config --system --set auto_update_conda false \
-    && conda config --system --set show_channel_urls true \
-    && sync && conda clean -y --all && sync \
-    && conda create -y -q --name neuro \
-    && bash -c "source activate neuro" \
-    && rm -rf ~/.cache/pip/* \
-    && sync
-
 RUN apt update && apt install -y python2.7 python-numpy python-nibabel
 RUN apt update && apt install -y tcsh vim 
 RUN \
@@ -165,6 +147,26 @@ RUN apt-get update -qq \
         language-pack-en \
     && apt-get clean \
     && mv /opt/src/ImageMagick-policy.xml /etc/ImageMagick-6/policy.xml
+
+ENV CONDA_DIR="/opt/miniconda-latest" \
+    PATH="$PATH:/opt/miniconda-latest/bin"
+RUN export PATH="$PATH:/opt/miniconda-latest/bin" \
+    && echo "Downloading Miniconda installer ..." \
+    && conda_installer="/tmp/miniconda.sh" \
+    && curl -fsSL --retry 5 -o "$conda_installer" https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh \
+    && bash "$conda_installer" -b -p /opt/miniconda-latest \
+    && rm -f "$conda_installer" \
+    && conda update -yq -nbase conda \
+    && conda config --system --prepend channels conda-forge \
+    && conda config --system --set auto_update_conda false \
+    && conda config --system --set show_channel_urls true \
+    && conda install pandas \
+    && sync && conda clean -y --all && sync \
+    && conda create -y -q --name neuro \
+    && bash -c "source activate neuro" \
+    && rm -rf ~/.cache/pip/* \
+    && sync
+
 
 RUN echo '{ \
     \n  "pkg_manager": "apt", \

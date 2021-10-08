@@ -24,7 +24,7 @@ done
 cd "${out_dir}"
 
 # Reformat volumes to single CSV
-reformat_vols.sh
+reformat_vols.py
 
 # Find center of mass of left thalamus
 com=$(fslstats left/1-THALAMUS -c)
